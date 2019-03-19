@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_main"
+    app:startDestination="@id/rfid">
+
+    <action
+        android:id="@+id/to_nav_main"
+        app:destination="@id/nav_main" />
+
+    <action
+        android:id="@+id/to_nav_bluetooth"
+        app:destination="@id/bluetooth" />
+
+    <action
+        android:id="@+id/to_nav_printer"
+        app:destination="@id/printer" />
+
+    <fragment
+        android:id="@+id/rfid"
+        android:name="org.oz.test.ui.rfid.RFIDFragment"
+        android:label="rfid_fragment"
+        tools:layout="@layout/rfid_fragment" />
+
+    <fragment
+        android:id="@+id/bluetooth"
+        android:name="org.oz.test.ui.bt.BluetoothFragment"
+        android:label="bluetooth_fragment"
+        tools:layout="@layout/bluetooth_fragment" />
+
+    <fragment
+        android:id="@+id/printer"
+        android:name="org.oz.test.ui.printer.PrinterFragment"
+        android:label="printer_fragment"
+        tools:layout="@layout/printer_fragment" />
+
+</navigation>

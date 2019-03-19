@@ -1,0 +1,167 @@
+apply plugin: 'com.android.application'
+apply plugin: "androidx.navigation.safeargs"
+
+android {
+    compileSdkVersion 28
+    defaultConfig {
+        applicationId "org.oz.test"
+        minSdkVersion 23
+        targetSdkVersion 28
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        multiDexEnabled = true
+    }
+
+    dataBinding {
+        enabled = true
+    }
+
+    compileOptions {
+        sourceCompatibility = '1.8'
+        targetCompatibility = '1.8'
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+dependencies {
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    implementation 'androidx.multidex:multidex:2.0.1'
+    implementation 'androidx.appcompat:appcompat:1.1.0-alpha03'
+    implementation 'com.google.android.material:material:1.1.0-alpha04'
+    implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'androidx.test:runner:1.1.2-alpha02'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0-alpha02'
+    implementation 'androidx.recyclerview:recyclerview:1.0.0'
+
+    //  dagger2
+    implementation 'com.google.dagger:dagger:2.20'
+    annotationProcessor 'com.google.dagger:dagger-compiler:2.20'
+    implementation 'com.google.dagger:dagger-android:2.20'
+    implementation 'com.google.dagger:dagger-android-support:2.20'
+
+    // if you use the support libraries
+    annotationProcessor 'com.google.dagger:dagger-android-processor:2.20'
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+    implementation 'androidx.cardview:cardview:1.0.0'
+    implementation 'androidx.viewpager:viewpager:1.0.0'
+    implementation 'androidx.gridlayout:gridlayout:1.0.0'
+    def lifecycle_version = "2.0.0"
+
+    // ViewModel and LiveData
+    implementation 'androidx.lifecycle:lifecycle-extensions:2.1.0-alpha03'
+
+    // alternatively - just ViewModel
+    implementation 'androidx.lifecycle:lifecycle-viewmodel:2.1.0-alpha03'
+
+    // use -ktx for Kotlin
+
+    // alternatively - just LiveData
+    implementation 'androidx.lifecycle:lifecycle-livedata:2.1.0-alpha03'
+
+    // alternatively - Lifecycles only (no ViewModel or LiveData). Some UI
+
+    //     AndroidX libraries use this lightweight import for Lifecycle
+    implementation 'androidx.lifecycle:lifecycle-runtime:2.1.0-alpha03'
+    annotationProcessor "androidx.lifecycle:lifecycle-compiler:2.1.0-alpha03"
+
+    // use kapt for Kotlin
+
+    // alternately - if using Java8, use the following instead of lifecycle-compiler
+    implementation 'androidx.lifecycle:lifecycle-common-java8:2.1.0-alpha03'
+
+    // optional - ReactiveStreams support for LiveData
+    implementation 'androidx.lifecycle:lifecycle-reactivestreams:2.1.0-alpha03'
+
+    // use -ktx for Kotlin
+
+    // optional - Test helpers for LiveData
+    testImplementation "androidx.arch.core:core-testing:$lifecycle_version"
+
+    //room
+    implementation 'androidx.room:room-runtime:2.1.0-alpha05'
+    annotationProcessor "androidx.room:room-compiler:2.1.0-alpha05"
+
+    // use kapt for Kotlin
+
+    // optional - RxJava support for Room
+    implementation 'androidx.room:room-rxjava2:2.1.0-alpha05'
+
+    // optional - Guava support for Room, including Optional and ListenableFuture
+
+    //    implementation "androidx.room:room-guava:$room_version"
+
+    // Test helpers
+    testImplementation 'androidx.room:room-testing:2.1.0-alpha05'
+    implementation 'androidx.paging:paging-runtime:2.1.0'
+
+    // use -ktx for Kotlin
+
+    // alternatively - without Android dependencies for testing
+    testImplementation 'androidx.paging:paging-common:2.1.0'
+
+    // use -ktx for Kotlin
+
+    // optional - RxJava support
+    implementation 'androidx.paging:paging-rxjava2:2.1.0'
+
+    // use -ktx for Kotlin
+    implementation 'android.arch.navigation:navigation-fragment:1.0.0'
+
+    // use -ktx for Kotlin
+    implementation 'android.arch.navigation:navigation-ui:1.0.0'
+
+    // use -ktx for Kotlin
+
+    // optional - Test helpers
+
+    // this library depends on the Kotlin standard library
+    androidTestImplementation 'android.arch.navigation:navigation-testing:1.0.0-alpha08'
+
+    //work
+    implementation 'android.arch.work:work-runtime:1.0.0'
+
+    // use -ktx for Kotlin+Coroutines
+
+    // optional - RxJava2 support
+    implementation 'android.arch.work:work-rxjava2:1.0.0'
+
+    // optional - Test helpers
+    androidTestImplementation 'android.arch.work:work-testing:1.0.0'
+
+    /*** network ***/
+
+    //glide
+    def glide_version = "4.8.0"
+    implementation "com.github.bumptech.glide:glide:$glide_version"
+    annotationProcessor "com.github.bumptech.glide:compiler:$glide_version"
+    implementation 'com.github.bumptech.glide:okhttp3-integration:4.8.0@aar'
+
+    //stetho
+    def stetho_version = "1.5.0"
+    implementation "com.facebook.stetho:stetho:$stetho_version"
+    implementation "com.facebook.stetho:stetho-okhttp3:$stetho_version"
+    implementation 'com.google.code.gson:gson:2.8.5'
+    implementation 'com.squareup.okhttp3:logging-interceptor:3.12.1'
+    implementation 'com.squareup.okhttp3:okhttp:3.12.1'
+    testImplementation 'com.squareup.okhttp3:mockwebserver:3.12.1'
+    implementation 'com.squareup.retrofit2:retrofit:2.5.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.5.0'
+    implementation 'com.squareup.retrofit2:adapter-rxjava2:2.5.0'
+
+    /*** utils ***/
+    implementation 'com.blankj:utilcode:1.22.3'
+
+    /*** async ***/
+    implementation 'io.reactivex.rxjava2:rxandroid:2.1.0'
+    implementation 'io.reactivex.rxjava2:rxjava:2.2.4'
+}
