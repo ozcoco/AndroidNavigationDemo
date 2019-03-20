@@ -2,20 +2,8 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/nav_main"
-    app:startDestination="@id/rfid">
-
-    <action
-        android:id="@+id/to_nav_main"
-        app:destination="@id/nav_main" />
-
-    <action
-        android:id="@+id/to_nav_bluetooth"
-        app:destination="@id/bluetooth" />
-
-    <action
-        android:id="@+id/to_nav_printer"
-        app:destination="@id/printer" />
+    android:id="@+id/main"
+    app:startDestination="@+id/rfid">
 
     <fragment
         android:id="@+id/rfid"
@@ -34,5 +22,17 @@
         android:name="org.oz.test.ui.printer.PrinterFragment"
         android:label="printer_fragment"
         tools:layout="@layout/printer_fragment" />
+
+    <action
+        android:id="@+id/to_nav_rfid"
+        app:destination="@id/rfid" />
+
+    <action
+        android:id="@+id/to_nav_bluetooth"
+        app:destination="@id/bluetooth" />
+
+    <action
+        android:id="@+id/to_nav_printer"
+        app:destination="@id/printer" />
 
 </navigation>

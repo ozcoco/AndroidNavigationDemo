@@ -12,14 +12,17 @@ import org.oz.test.R;
 import org.oz.test.base.BaseFragment;
 import org.oz.test.databinding.FragmentMainBinding;
 
+import java.util.Objects;
+
 import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
-import androidx.navigation.Navigation;
+import androidx.navigation.NavController;
+import androidx.navigation.fragment.NavHostFragment;
 
 
 public class MainFragment extends BaseFragment implements BottomNavigationView.OnNavigationItemSelectedListener {
 
-    private FragmentMainBinding mFragmentMainBinding;
+    private NavController mNavController;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -29,39 +32,42 @@ public class MainFragment extends BaseFragment implements BottomNavigationView.O
 
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        mFragmentMainBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_main, container, false);
+        final FragmentMainBinding binding = DataBindingUtil.inflate(inflater, R.layout.fragment_main, container, false);
 
-        mFragmentMainBinding.setLifecycleOwner(this);
+        binding.setLifecycleOwner(this);
 
-        mFragmentMainBinding.navigation.setOnNavigationItemSelectedListener(this);
+        binding.navigation.setOnNavigationItemSelectedListener(this);
 
-        return mFragmentMainBinding.getRoot();
+        return binding.getRoot();
     }
 
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
 
+        if (mNavController == null)
+            mNavController = NavHostFragment.findNavController(Objects.requireNonNull(getChildFragmentManager().findFragmentById(R.id.nav_host_fragment)));
+
         switch (item.getItemId()) {
 
             case R.id.navigation_home:
                 //todo
 
-                Navigation.findNavController(mFragmentMainBinding.container).navigate(R.id.to_nav_main);
+                mNavController.navigate(R.id.to_nav_rfid);
 
                 return true;
 
             case R.id.navigation_dashboard:
 
-                Navigation.findNavController(mFragmentMainBinding.container).navigate(R.id.to_nav_bluetooth);
+                mNavController.navigate(R.id.to_nav_bluetooth);
 
                 return true;
             case R.id.navigation_notifications:
 
-                Navigation.findNavController(mFragmentMainBinding.container).navigate(R.id.to_nav_printer);
+                mNavController.navigate(R.id.to_nav_printer);
 
                 return true;
         }
