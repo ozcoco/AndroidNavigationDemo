@@ -12,6 +12,11 @@ android {
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         multiDexEnabled = true
+
+        ndk {
+            abiFilters "armeabi-v7a"
+        }
+
     }
 
     dataBinding {
@@ -122,9 +127,6 @@ dependencies {
 
     // For Kotlin use navigation-fragment-ktx
     implementation "androidx.navigation:navigation-ui:$nav_version"
-
-    // this library depends on the Kotlin standard library
-    androidTestImplementation 'android.arch.navigation:navigation-testing:1.0.0-alpha08'
 
     //work
 

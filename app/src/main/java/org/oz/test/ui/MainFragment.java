@@ -1,78 +1,69 @@
 package org.oz.test.ui;
 
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import org.oz.test.R;
-import org.oz.test.base.BaseFragment;
+import org.oz.test.base.NavBindingFragment;
 import org.oz.test.databinding.FragmentMainBinding;
 
-import java.util.Objects;
-
 import androidx.annotation.NonNull;
-import androidx.databinding.DataBindingUtil;
-import androidx.navigation.NavController;
-import androidx.navigation.fragment.NavHostFragment;
+import androidx.annotation.Nullable;
+import androidx.lifecycle.ViewModelProviders;
 
 
-public class MainFragment extends BaseFragment implements BottomNavigationView.OnNavigationItemSelectedListener {
+public class MainFragment extends NavBindingFragment<FragmentMainBinding> implements MainContract.View {
 
-    private NavController mNavController;
+    public class Handle implements BottomNavigationView.OnNavigationItemSelectedListener {
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        //todo getArguments
-    }
+        /**
+         * onNavigationItemSelected
+         */
+        @Override
+        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
 
+            switch (item.getItemId()) {
 
-    @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+                case R.id.navigation_home:
 
-        final FragmentMainBinding binding = DataBindingUtil.inflate(inflater, R.layout.fragment_main, container, false);
+                    getNavController().navigate(R.id.to_nav_rfid);
 
-        binding.setLifecycleOwner(this);
+                    break;
 
-        binding.navigation.setOnNavigationItemSelectedListener(this);
+                case R.id.navigation_dashboard:
 
-        return binding.getRoot();
-    }
+                    getNavController().navigate(R.id.to_nav_bluetooth);
 
+                    break;
 
-    @Override
-    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                case R.id.navigation_notifications:
 
-        if (mNavController == null)
-            mNavController = NavHostFragment.findNavController(Objects.requireNonNull(getChildFragmentManager().findFragmentById(R.id.nav_host_fragment)));
+                    getNavController().navigate(R.id.to_nav_printer);
 
-        switch (item.getItemId()) {
+                    break;
+            }
 
-            case R.id.navigation_home:
-                //todo
+            getBinding().getVm().print();
 
-                mNavController.navigate(R.id.to_nav_rfid);
+            showMessage("onNavigationItemSelected");
 
-                return true;
-
-            case R.id.navigation_dashboard:
-
-                mNavController.navigate(R.id.to_nav_bluetooth);
-
-                return true;
-            case R.id.navigation_notifications:
-
-                mNavController.navigate(R.id.to_nav_printer);
-
-                return true;
+            return true;
         }
 
-        return false;
+
     }
+
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+
+        getBinding().setVm(ViewModelProviders.of(this).get(MainViewModel.class));
+
+        getBinding().setHandle(new Handle());
+    }
+
 
 }

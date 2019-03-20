@@ -19,4 +19,9 @@ public class RfidViewModel extends AndroidViewModel {
     protected void onCleared() {
         super.onCleared();
     }
+
+
+
+
+
 }
