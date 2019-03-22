@@ -10,7 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.MutableLiveData;
 
-public class BluetoothViewModel extends AndroidViewModel {
+public class BluetoothViewModel extends AndroidViewModel implements BluetoothContract.Model {
 
     public MutableLiveData<String> content = new MutableLiveData<>();
 
@@ -36,9 +36,6 @@ public class BluetoothViewModel extends AndroidViewModel {
                     .append(dev.getBluetoothClass().getMajorDeviceClass())
                     .append('\n');
         }
-
-//        BluetoothClass.Device.Major.IMAGING
-        
 
         content.setValue(builder.toString());
 

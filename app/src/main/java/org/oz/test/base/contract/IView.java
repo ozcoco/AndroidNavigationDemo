@@ -26,6 +26,8 @@ public interface IView {
      */
     default void showMessage(@NonNull String message) {
 
+        System.out.println("Note ^_* :" + message);
+
     }
 
 

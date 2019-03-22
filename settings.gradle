@@ -1,1 +1,1 @@
-include ':app', ':uhf'
+include ':app', ':uhf', ':btp'
