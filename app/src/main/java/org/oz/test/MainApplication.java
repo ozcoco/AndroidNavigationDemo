@@ -2,9 +2,21 @@ package org.oz.test;
 
 import android.content.res.Configuration;
 
+import org.oz.ntv.CodecHelper;
+
 import androidx.multidex.MultiDexApplication;
 
 public class MainApplication extends MultiDexApplication {
+
+    @Override
+    public void onCreate() {
+        super.onCreate();
+
+        CodecHelper helper = new CodecHelper();
+
+        helper.log("哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈");
+
+    }
 
     @Override
     public void onLowMemory() {
