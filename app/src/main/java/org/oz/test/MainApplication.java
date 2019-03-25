@@ -14,7 +14,12 @@ public class MainApplication extends MultiDexApplication {
 
         CodecHelper helper = new CodecHelper();
 
-        helper.log("哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈");
+        new Thread(() -> {
+            
+            helper.log("哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈");
+
+        }).start();
+
 
     }
 

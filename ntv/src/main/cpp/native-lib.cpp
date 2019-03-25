@@ -18,7 +18,6 @@ Java_org_oz_ntv_CodecHelper_log(JNIEnv *env, jobject obj, jstring _msg) {
 
     av_log(nullptr, AV_LOG_INFO, "%s", msg);
 
-
 }
 
 

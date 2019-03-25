@@ -32,13 +32,9 @@ public class BluetoothController extends BaseController<BluetoothFragment> imple
 
         if (context == null) return;
 
-        new Thread(() -> {
+        Bitmap bitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.ic_btm);
 
-            Bitmap bitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.ic_btm);
-
-            mPrinterService.printBitmap(bitmap);
-
-        }).start();
+        mPrinterService.printBitmap(bitmap);
 
     }
 
@@ -84,9 +80,9 @@ public class BluetoothController extends BaseController<BluetoothFragment> imple
 
         if (context == null) return;
 
-        context.startService(new Intent(context, PrinterService.class));
-
         Intent intent = new Intent(context, PrinterService.class);
+
+//        context.startService(new Intent(context, PrinterService.class));
 
         context.bindService(intent, this, Context.BIND_AUTO_CREATE); // bindService
 
@@ -102,7 +98,7 @@ public class BluetoothController extends BaseController<BluetoothFragment> imple
 
         context.unbindService(this);
 
-        context.stopService(new Intent(context, PrinterService.class));
+//        context.stopService(new Intent(context, PrinterService.class));
     }
 
 
@@ -139,7 +135,7 @@ public class BluetoothController extends BaseController<BluetoothFragment> imple
     @Override
     public void onPause() {
         super.onPause();
-        unbindService();
+
     }
 
 
@@ -147,7 +143,7 @@ public class BluetoothController extends BaseController<BluetoothFragment> imple
     public void onDestroy() {
         super.onDestroy();
 
-
+        unbindService();
     }
 
 }
