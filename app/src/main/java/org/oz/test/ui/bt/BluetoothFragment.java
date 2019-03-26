@@ -3,41 +3,35 @@ package org.oz.test.ui.bt;
 import android.os.Bundle;
 import android.view.View;
 
-import org.oz.test.base.NavBindingFragment;
+import org.oz.test.base.ControllerNavBindingFragment;
 import org.oz.test.databinding.BluetoothFragmentBinding;
 
 import androidx.annotation.Nullable;
 import androidx.lifecycle.ViewModelProviders;
 
-public class BluetoothFragment extends NavBindingFragment<BluetoothFragmentBinding> implements BluetoothContract.View {
+public class BluetoothFragment extends ControllerNavBindingFragment<BluetoothFragmentBinding, BluetoothController> implements BluetoothContract.View {
 
-    private BluetoothController mBluetoothController;
 
     public class Handle {
 
         public void onPickPrinter(View view) {
 
-            if (mBluetoothController != null)
-                mBluetoothController.print();
+            final BluetoothController controller = getController();
+
+            if (controller != null)
+                controller.pickPrinter();
 
         }
 
         public void onPrint(View view) {
 
-            if (mBluetoothController != null)
-                mBluetoothController.pickPrinter();
+            final BluetoothController controller = getController();
+
+            if (controller != null)
+                controller.print();
 
         }
 
-
-    }
-
-
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-        getLifecycle().addObserver(mBluetoothController = new BluetoothController(this));
     }
 
     @Override
@@ -45,15 +39,9 @@ public class BluetoothFragment extends NavBindingFragment<BluetoothFragmentBindi
         super.onActivityCreated(savedInstanceState);
 
         getBinding().setVm(ViewModelProviders.of(this).get(BluetoothViewModel.class));
+
         getBinding().setHandle(new Handle());
 
     }
 
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-
-        getLifecycle().removeObserver(mBluetoothController);
-
-    }
 }

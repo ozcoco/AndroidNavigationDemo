@@ -82,7 +82,7 @@ public class BluetoothController extends BaseController<BluetoothFragment> imple
 
         Intent intent = new Intent(context, PrinterService.class);
 
-//        context.startService(new Intent(context, PrinterService.class));
+        context.startService(intent);
 
         context.bindService(intent, this, Context.BIND_AUTO_CREATE); // bindService
 
@@ -98,7 +98,7 @@ public class BluetoothController extends BaseController<BluetoothFragment> imple
 
         context.unbindService(this);
 
-//        context.stopService(new Intent(context, PrinterService.class));
+        context.stopService(new Intent(context, PrinterService.class));
     }
 
 

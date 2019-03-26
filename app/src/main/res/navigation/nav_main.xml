@@ -23,6 +23,13 @@
         android:label="printer_fragment"
         tools:layout="@layout/printer_fragment" />
 
+    <fragment
+        android:id="@+id/av"
+        android:name="org.oz.test.ui.av.AVFragment"
+        android:label="av_fragment"
+        tools:layout="@layout/av_fragment" />
+
+
     <action
         android:id="@+id/to_nav_rfid"
         app:destination="@id/rfid" />
@@ -34,5 +41,9 @@
     <action
         android:id="@+id/to_nav_printer"
         app:destination="@id/printer" />
+
+    <action
+        android:id="@+id/to_nav_av"
+        app:destination="@id/av" />
 
 </navigation>

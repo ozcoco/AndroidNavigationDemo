@@ -3,6 +3,7 @@ extern "C" {
 
 #include <jni.h>
 #include "libavutil/log.h"
+#include "utils/log.h"
 
 }
 
@@ -15,6 +16,8 @@ Java_org_oz_ntv_CodecHelper_log(JNIEnv *env, jobject obj, jstring _msg) {
     jboolean isCopy = 1;
 
     const char *msg = env->GetStringUTFChars(_msg, &isCopy);
+
+    LOGE("%s", msg);
 
     av_log(nullptr, AV_LOG_INFO, "%s", msg);
 

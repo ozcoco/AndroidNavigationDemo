@@ -26,21 +26,27 @@ public class MainFragment extends NavBindingFragment<FragmentMainBinding> implem
 
             switch (item.getItemId()) {
 
-                case R.id.navigation_home:
+                case R.id.navigation_rfid:
 
                     getNavController().navigate(R.id.to_nav_rfid);
 
                     break;
 
-                case R.id.navigation_dashboard:
+                case R.id.navigation_bluetooth:
 
                     getNavController().navigate(R.id.to_nav_bluetooth);
 
                     break;
 
-                case R.id.navigation_notifications:
+                case R.id.navigation_printer:
 
                     getNavController().navigate(R.id.to_nav_printer);
+
+                    break;
+
+                    case R.id.navigation_av:
+
+                    getNavController().navigate(R.id.to_nav_av);
 
                     break;
             }
