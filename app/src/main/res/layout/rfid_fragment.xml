@@ -5,6 +5,10 @@
     <data>
 
         <variable
+            name="handle"
+            type="org.oz.test.ui.rfid.RFIDFragment.Handle" />
+
+        <variable
             name="vm"
             type="org.oz.test.ui.rfid.RfidViewModel" />
     </data>

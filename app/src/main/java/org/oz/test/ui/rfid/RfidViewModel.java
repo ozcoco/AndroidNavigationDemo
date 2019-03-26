@@ -6,7 +6,7 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.MutableLiveData;
 
-public class RfidViewModel extends AndroidViewModel {
+public class RfidViewModel extends AndroidViewModel implements RFIDContract.Model {
 
     public MutableLiveData<Integer> count = new MutableLiveData<>();
 
@@ -19,9 +19,6 @@ public class RfidViewModel extends AndroidViewModel {
     protected void onCleared() {
         super.onCleared();
     }
-
-
-
 
 
 }
