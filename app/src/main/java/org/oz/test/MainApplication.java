@@ -12,6 +12,7 @@ public class MainApplication extends MultiDexApplication {
     public void onCreate() {
         super.onCreate();
 
+/*
         CodecHelper helper = new CodecHelper();
 
         new Thread(() -> {
@@ -19,6 +20,7 @@ public class MainApplication extends MultiDexApplication {
             helper.log("哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈");
 
         }).start();
+*/
 
 
     }

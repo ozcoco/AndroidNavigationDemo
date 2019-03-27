@@ -14,7 +14,7 @@ android {
         multiDexEnabled = true
 
         ndk {
-            abiFilters "armeabi-v7a"/*, "x86", "arm64-v8a", "x86_64"*/
+            abiFilters "armeabi"/*, "armeabi-v7a"*//*, "x86", "arm64-v8a", "x86_64"*/
         }
 
     }
@@ -94,20 +94,20 @@ dependencies {
     testImplementation "androidx.arch.core:core-testing:$lifecycle_version"
 
     //room
-    implementation 'androidx.room:room-runtime:2.1.0-alpha05'
-    annotationProcessor "androidx.room:room-compiler:2.1.0-alpha05"
+    implementation 'androidx.room:room-runtime:2.1.0-alpha06'
+    annotationProcessor "androidx.room:room-compiler:2.1.0-alpha06"
 
     // use kapt for Kotlin
 
     // optional - RxJava support for Room
-    implementation 'androidx.room:room-rxjava2:2.1.0-alpha05'
+    implementation 'androidx.room:room-rxjava2:2.1.0-alpha06'
 
     // optional - Guava support for Room, including Optional and ListenableFuture
 
     //    implementation "androidx.room:room-guava:$room_version"
 
     // Test helpers
-    testImplementation 'androidx.room:room-testing:2.1.0-alpha05'
+    testImplementation 'androidx.room:room-testing:2.1.0-alpha06'
     implementation 'androidx.paging:paging-runtime:2.1.0'
 
     // use -ktx for Kotlin
@@ -163,4 +163,5 @@ dependencies {
     implementation 'io.reactivex.rxjava2:rxjava:2.2.4'
     implementation project(':btp')
     implementation project(':ntv')
+    implementation project(':uhf')
 }
