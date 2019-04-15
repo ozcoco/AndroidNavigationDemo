@@ -40,12 +40,12 @@ dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation 'androidx.multidex:multidex:2.0.1'
     implementation 'androidx.fragment:fragment:1.0.0'
-    implementation 'androidx.appcompat:appcompat:1.1.0-alpha03'
-    implementation 'com.google.android.material:material:1.1.0-alpha04'
+    implementation 'androidx.appcompat:appcompat:1.1.0-alpha04'
+    implementation 'com.google.android.material:material:1.1.0-alpha05'
     implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
     testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'androidx.test:runner:1.1.2-alpha02'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0-alpha02'
+    androidTestImplementation 'androidx.test:runner:1.2.0-alpha03'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0-alpha03'
     implementation 'androidx.recyclerview:recyclerview:1.0.0'
     implementation 'androidx.recyclerview:recyclerview-selection:1.0.0'
 
@@ -64,29 +64,29 @@ dependencies {
     def lifecycle_version = "2.0.0"
 
     // ViewModel and LiveData
-    implementation 'androidx.lifecycle:lifecycle-extensions:2.1.0-alpha03'
+    implementation 'androidx.lifecycle:lifecycle-extensions:2.1.0-alpha04'
 
     // alternatively - just ViewModel
-    implementation 'androidx.lifecycle:lifecycle-viewmodel:2.1.0-alpha03'
+    implementation 'androidx.lifecycle:lifecycle-viewmodel:2.1.0-alpha04'
 
     // use -ktx for Kotlin
 
     // alternatively - just LiveData
-    implementation 'androidx.lifecycle:lifecycle-livedata:2.1.0-alpha03'
+    implementation 'androidx.lifecycle:lifecycle-livedata:2.1.0-alpha04'
 
     // alternatively - Lifecycles only (no ViewModel or LiveData). Some UI
 
     //     AndroidX libraries use this lightweight import for Lifecycle
-    implementation 'androidx.lifecycle:lifecycle-runtime:2.1.0-alpha03'
-    annotationProcessor "androidx.lifecycle:lifecycle-compiler:2.1.0-alpha03"
+    implementation 'androidx.lifecycle:lifecycle-runtime:2.1.0-alpha04'
+    annotationProcessor "androidx.lifecycle:lifecycle-compiler:2.1.0-alpha04"
 
     // use kapt for Kotlin
 
     // alternately - if using Java8, use the following instead of lifecycle-compiler
-    implementation 'androidx.lifecycle:lifecycle-common-java8:2.1.0-alpha03'
+    implementation 'androidx.lifecycle:lifecycle-common-java8:2.1.0-alpha04'
 
     // optional - ReactiveStreams support for LiveData
-    implementation 'androidx.lifecycle:lifecycle-reactivestreams:2.1.0-alpha03'
+    implementation 'androidx.lifecycle:lifecycle-reactivestreams:2.1.0-alpha04'
 
     // use -ktx for Kotlin
 
@@ -156,7 +156,10 @@ dependencies {
     implementation 'com.squareup.retrofit2:adapter-rxjava2:2.5.0'
 
     /*** utils ***/
-    implementation 'com.blankj:utilcode:1.22.3'
+    implementation 'com.blankj:utilcode:1.23.7'
+
+    /*** QR ***/
+    implementation 'cn.bingoogolapple:bga-qrcode-zxing:1.3.6'
 
     /*** async ***/
     implementation 'io.reactivex.rxjava2:rxandroid:2.1.0'
@@ -164,4 +167,8 @@ dependencies {
     implementation project(':btp')
     implementation project(':ntv')
     implementation project(':uhf')
+
+    /*** permission ***/
+    implementation "org.permissionsdispatcher:permissionsdispatcher:4.3.1"
+    annotationProcessor "org.permissionsdispatcher:permissionsdispatcher-processor:4.3.1"
 }

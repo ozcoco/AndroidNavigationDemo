@@ -6,12 +6,16 @@ import android.content.Intent;
 import android.content.ServiceConnection;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
+import android.graphics.Point;
 import android.os.IBinder;
+import android.util.Size;
 
 import com.yf.btp.PrinterService;
 
 import org.oz.test.R;
 import org.oz.test.base.controller.BaseController;
+import org.oz.test.util.QRCodeUtils;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.Lifecycle;
@@ -32,9 +36,9 @@ public class BluetoothController extends BaseController<BluetoothFragment> imple
 
         if (context == null) return;
 
-        Bitmap bitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.ic_btm);
+        Bitmap bitmap = QRCodeUtils.createQRCodeBitmap("sddfsgdgfsdfsgfdsvdhjvhjsdhfshjdhsdfs", 100, 100);
 
-        mPrinterService.printBitmap(bitmap);
+        mPrinterService.printBitmap(bitmap, new Point(80, 98), new Size(34, 30), 10);
 
     }
 
@@ -76,6 +80,8 @@ public class BluetoothController extends BaseController<BluetoothFragment> imple
 
         if (getFragment() == null) return;
 
+        if (mPrinterService != null) return;
+
         final Context context = getFragment().getContext();
 
         if (context == null) return;
@@ -104,6 +110,7 @@ public class BluetoothController extends BaseController<BluetoothFragment> imple
 
     BluetoothController(@NonNull BluetoothFragment fragment) {
         super(fragment);
+
     }
 
     @Override
@@ -116,26 +123,26 @@ public class BluetoothController extends BaseController<BluetoothFragment> imple
     public void onCreate() {
         super.onCreate();
 
-        bindService();
     }
 
     @Override
     public void onStart() {
         super.onStart();
-
+        bindService();
     }
 
 
     @Override
     public void onResume() {
         super.onResume();
+
     }
 
 
     @Override
     public void onPause() {
         super.onPause();
-
+        unbindService();
     }
 
 
@@ -143,7 +150,7 @@ public class BluetoothController extends BaseController<BluetoothFragment> imple
     public void onDestroy() {
         super.onDestroy();
 
-        unbindService();
+
     }
 
 }
