@@ -17,7 +17,7 @@ public class RFIDFragment extends ControllerNavBindingFragment<RfidFragmentBindi
 
         public void onScan(View v) {
 
-            getBinding().getVm().scan();
+//            getBinding().getVm().scan();
 
         }
 
@@ -28,13 +28,13 @@ public class RFIDFragment extends ControllerNavBindingFragment<RfidFragmentBindi
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        RfidViewModel viewModel = ViewModelProviders.of(Objects.requireNonNull(getParentFragment())).get(RfidViewModel.class);
+       /* RfidViewModel viewModel = ViewModelProviders.of(Objects.requireNonNull(getParentFragment())).get(RfidViewModel.class);
 
         viewModel.count.setValue(viewModel.count.getValue() + 1);
 
         getBinding().setHandle(new Handle());
 
-        getBinding().setVm(viewModel);
+        getBinding().setVm(viewModel);*/
 
     }
 

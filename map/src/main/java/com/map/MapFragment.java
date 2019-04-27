@@ -16,15 +16,9 @@ import com.map.bmap.BMapFragment;
 
 public class MapFragment extends Fragment {
 
-    public enum Platform {
-        BMAP, // 百度
-        AMAP //高德
-    }
-
     private Map mMap;
 
     private Platform mPlatform;
-
 
     public Map getMap() {
         return mMap;

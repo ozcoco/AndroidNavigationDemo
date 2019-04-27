@@ -5,6 +5,7 @@
     <string name="title_printer">Printer</string>
     <string name="title_av">AV</string>
     <string name="scan">scan</string>
+    <string name="title_map">map</string>
 
     <!-- TODO: Remove or change this placeholder text -->
 </resources>

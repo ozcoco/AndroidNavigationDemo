@@ -1,4 +1,4 @@
-package com.map.helper;
+package com.map.amap.helper;
 
 import android.content.Context;
 
@@ -11,7 +11,7 @@ import com.amap.api.maps.model.LatLng;
 import com.amap.api.maps.model.LatLngBounds;
 import com.amap.api.maps.model.MarkerOptions;
 import com.amap.api.maps.model.PolylineOptions;
-import com.map.amap.R;
+import com.map.R;
 import com.orhanobut.logger.AndroidLogAdapter;
 import com.orhanobut.logger.Logger;
 
@@ -43,6 +43,11 @@ public class AMapHelper {
 
         mAMap = map;
 
+    }
+
+    public static AMapHelper newInstance(Context context, AMap map) {
+
+        return new AMapHelper(context, map);
     }
 
 
@@ -87,16 +92,28 @@ public class AMapHelper {
 
     public void drawMyLocation(LatLng latLng) {
 
-        drewMarker(latLng, R.drawable.ic_marker_red);
+        drawMarker(latLng, R.drawable.ic_marker_red);
 
     }
 
 
-    private void drewMarker(LatLng latLng, int drawableId) {
+    public void drawMarker(LatLng latLng) {
+
+        drawMarker(latLng, 0, null, null);
+
+    }
+
+    public void drawMarker(LatLng latLng, int drawableId) {
+
+        drawMarker(latLng, drawableId, null, null);
+
+    }
+
+    public void drawMarker(LatLng latLng, int drawableId, String title, String snippet) {
 
         if (mAMap == null) return;
 
-        mAMap.addMarker(new MarkerOptions().position(latLng).icon(BitmapDescriptorFactory.fromResource(drawableId)).title("My").snippet("当前位置"));
+        mAMap.addMarker(new MarkerOptions().position(latLng).icon(BitmapDescriptorFactory.fromResource(drawableId <= 0 ? R.drawable.ic_marker_red : drawableId)).title(title).snippet(snippet));
 
         LatLngBounds.Builder bounds = new LatLngBounds.Builder();
 
@@ -108,6 +125,11 @@ public class AMapHelper {
 
 
     public void drawTrack(List<LatLng> latLngs) {
+
+        drawTrack(latLngs, 0);
+    }
+
+    public void drawTrack(List<LatLng> latLngs, int drawableId) {
 
         if (mAMap == null || latLngs == null) return;
 
@@ -135,12 +157,18 @@ public class AMapHelper {
         mAMap.animateCamera(CameraUpdateFactory.newLatLngBounds(bounds.build(), 100));//第二个参数为四周留空宽度
 
         mAMap.addPolyline(new PolylineOptions().
-                addAll(latLngs).width(30).setUseTexture(true).setCustomTexture(BitmapDescriptorFactory.fromResource(R.drawable.tracelinetexture)));
+                addAll(latLngs).width(30).setUseTexture(true).setCustomTexture(BitmapDescriptorFactory.fromResource(drawableId <= 0 ? R.drawable.tracelinetexture : drawableId)));
 
     }
 
 
     public void drawSmoothTrack(List<LatLng> latLngs) {
+
+        drawSmoothTrack(latLngs, 0);
+    }
+
+
+    public void drawSmoothTrack(List<LatLng> latLngs, int drawableId) {
 
         if (mAMap == null || latLngs == null) return;
 
@@ -172,7 +200,7 @@ public class AMapHelper {
         mAMap.animateCamera(CameraUpdateFactory.newLatLngBounds(bounds.build(), 100));//第二个参数为四周留空宽度
 
         mAMap.addPolyline(new PolylineOptions().
-                addAll(points).width(30).setUseTexture(true).setCustomTexture(BitmapDescriptorFactory.fromResource(R.drawable.tracelinetexture)));
+                addAll(points).width(30).setUseTexture(true).setCustomTexture(BitmapDescriptorFactory.fromResource(drawableId <= 0 ? R.drawable.tracelinetexture : drawableId)));
 
     }
 

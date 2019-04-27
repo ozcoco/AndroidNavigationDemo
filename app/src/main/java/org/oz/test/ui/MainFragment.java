@@ -3,15 +3,15 @@ package org.oz.test.ui;
 import android.os.Bundle;
 import android.view.MenuItem;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.lifecycle.ViewModelProviders;
+
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import org.oz.test.R;
 import org.oz.test.base.NavBindingFragment;
 import org.oz.test.databinding.FragmentMainBinding;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.lifecycle.ViewModelProviders;
 
 
 public class MainFragment extends NavBindingFragment<FragmentMainBinding> implements MainContract.View {
@@ -44,9 +44,15 @@ public class MainFragment extends NavBindingFragment<FragmentMainBinding> implem
 
                     break;
 
-                    case R.id.navigation_av:
+                case R.id.navigation_av:
 
                     getNavController().navigate(R.id.to_nav_av);
+
+                    break;
+
+                case R.id.navigation_map:
+
+                    getNavController().navigate(R.id.to_nav_map);
 
                     break;
             }

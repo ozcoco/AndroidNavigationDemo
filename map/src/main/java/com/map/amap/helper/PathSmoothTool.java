@@ -1,4 +1,4 @@
-package com.map.helper;
+package com.map.amap.helper;
 
 import com.amap.api.maps.AMapUtils;
 import com.amap.api.maps.model.LatLng;
@@ -14,7 +14,7 @@ import java.util.List;
  * <p>
  * PathSmoothTool pathSmoothTool = new PathSmoothTool();
  * pathSmoothTool.setIntensity(2);//设置滤波强度，默认3
- * List<LatLng> mList = LatpathSmoothTool.kalmanFilterPath(list);
+ * List<MyLatLng> mList = LatpathSmoothTool.kalmanFilterPath(list);
  */
 
 public class PathSmoothTool {
