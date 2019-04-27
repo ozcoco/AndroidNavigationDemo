@@ -7,7 +7,7 @@ import com.map.feature.IMapStyle;
 
 public class Map implements IMap {
 
-    private IMap mMap;
+    private final IMap mMap;
 
     public Map(IMap map) {
         mMap = map;

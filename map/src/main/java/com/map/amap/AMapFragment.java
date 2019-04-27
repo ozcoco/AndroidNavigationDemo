@@ -8,10 +8,16 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.amap.api.maps.MapView;
 import com.map.R;
 import com.map.base.BaseFragment;
+import com.map.impl.AMap;
 
 public class AMapFragment extends BaseFragment {
+
+
+    private MapView mMapView;
+
 
     public static AMapFragment newInstance() {
         return new AMapFragment();
@@ -23,12 +29,16 @@ public class AMapFragment extends BaseFragment {
 
     }
 
-    
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-        return inflater.inflate(R.layout.fragment_map, container, false);
+        View root = inflater.inflate(R.layout.fragment_amap, container, false);
+
+        mMapView = root.findViewById(R.id.map_view);
+
+        return root;
     }
 
 
@@ -36,19 +46,38 @@ public class AMapFragment extends BaseFragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        initMap();
+        mMapView.onCreate(savedInstanceState);
+
+        initData();
+
+        initView();
+    }
+
+    private void initView() {
+
+        setMap(new AMap(mMapView.getContext(), mMapView.getMap()));
+
     }
 
 
-    private void initMap() {
+    private void initData() {
 
 
     }
 
 
     @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+        mMapView.onSaveInstanceState(outState);
+    }
+
+    @Override
     public void onResume() {
         super.onResume();
+
+        mMapView.onResume();
     }
 
     @Override
@@ -57,12 +86,21 @@ public class AMapFragment extends BaseFragment {
     }
 
     @Override
+    public void onPause() {
+        super.onPause();
+
+        mMapView.onPause();
+    }
+
+    @Override
     public void onStop() {
         super.onStop();
     }
 
     @Override
-    public void onDestroyView() {
-        super.onDestroyView();
+    public void onDestroy() {
+        super.onDestroy();
+
+        mMapView.onDestroy();
     }
 }

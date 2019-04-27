@@ -6,7 +6,7 @@ import com.map.feature.IMapLocation;
 import com.map.feature.IMapSearch;
 import com.map.feature.IMapStyle;
 
-public class AMapImpl implements IMap {
+public class BMap implements IMap {
     @Override
     public IMapSearch getMapSearch() {
         return null;
