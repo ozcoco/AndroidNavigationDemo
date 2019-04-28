@@ -20,8 +20,20 @@ public class MapFragment extends Fragment {
 
     private Platform mPlatform;
 
+    public static MapFragment newInstance() {
+        return new MapFragment();
+    }
+
+    public static MapFragment newInstance(Platform platform) {
+        return new MapFragment(platform);
+    }
+
     public Map getMap() {
         return mMap;
+    }
+
+    public MapFragment() {
+        this(Platform.AMAP);
     }
 
     public MapFragment(Platform platform) {

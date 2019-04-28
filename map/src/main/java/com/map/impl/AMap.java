@@ -3,6 +3,10 @@ package com.map.impl;
 import android.content.Context;
 
 import com.map.IMap;
+import com.map.amap.impl.AMapDraw;
+import com.map.amap.impl.AMapLocation;
+import com.map.amap.impl.AMapSearch;
+import com.map.amap.impl.AMapStyle;
 import com.map.feature.IMapDraw;
 import com.map.feature.IMapLocation;
 import com.map.feature.IMapSearch;
@@ -23,21 +27,21 @@ public class AMap implements IMap {
 
     @Override
     public IMapSearch getMapSearch() {
-        return null;
+        return new AMapSearch(mContext, mAMap);
     }
 
     @Override
     public IMapDraw getMapDraw() {
-        return null;
+        return new AMapDraw(mContext, mAMap);
     }
 
     @Override
     public IMapStyle getMapStyle() {
-        return null;
+        return new AMapStyle(mContext, mAMap);
     }
 
     @Override
     public IMapLocation getMapLocation() {
-        return null;
+        return new AMapLocation(mContext, mAMap);
     }
 }

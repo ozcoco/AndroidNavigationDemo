@@ -33,16 +33,19 @@
         android:id="@+id/map"
         android:name="org.oz.test.ui.map.MapFragment"
         android:label="map_fragment"
-        tools:layout="@layout/map_fragment" />
+        tools:layout="@layout/map_fragment">
+
+        <argument
+            android:name="platform"
+            android:defaultValue="AMAP"
+            app:argType="com.map.Platform"
+            app:nullable="false" />
+
+    </fragment>
 
     <action
         android:id="@+id/to_nav_map"
-        app:destination="@id/map">
-        <argument
-            android:name="PLATFORM"
-            app:argType="com.map.Platform"
-            app:nullable="false" />
-    </action>
+        app:destination="@id/map" />
 
     <action
         android:id="@+id/to_nav_rfid"

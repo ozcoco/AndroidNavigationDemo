@@ -1,1 +1,1 @@
-include ':app', ':uhf', ':btp', ':ntv', ':map'
+include ':app', ':uhf', ':btp', ':ntv', ':map', ':app2'

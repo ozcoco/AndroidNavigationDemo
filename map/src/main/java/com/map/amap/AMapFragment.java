@@ -13,6 +13,8 @@ import com.map.R;
 import com.map.base.BaseFragment;
 import com.map.impl.AMap;
 
+import java.util.Objects;
+
 public class AMapFragment extends BaseFragment {
 
 
@@ -23,12 +25,6 @@ public class AMapFragment extends BaseFragment {
         return new AMapFragment();
     }
 
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-    }
-
 
     @Nullable
     @Override
@@ -37,6 +33,8 @@ public class AMapFragment extends BaseFragment {
         View root = inflater.inflate(R.layout.fragment_amap, container, false);
 
         mMapView = root.findViewById(R.id.map_view);
+
+        setMap(new AMap(mMapView.getContext(), mMapView.getMap()));
 
         return root;
     }
@@ -55,7 +53,7 @@ public class AMapFragment extends BaseFragment {
 
     private void initView() {
 
-        setMap(new AMap(mMapView.getContext(), mMapView.getMap()));
+
 
     }
 

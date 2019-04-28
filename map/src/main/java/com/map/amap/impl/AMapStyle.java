@@ -2,7 +2,9 @@ package com.map.amap.impl;
 
 import android.content.Context;
 
+import com.amap.api.maps.AMap;
 import com.map.feature.IMapStyle;
+import com.map.feature.MapType;
 
 public class AMapStyle implements IMapStyle {
 
@@ -18,4 +20,26 @@ public class AMapStyle implements IMapStyle {
     }
 
 
+    @Override
+    public void setMapType(MapType type) {
+
+        switch (type) {
+            case MAP_TYPE_NAVI:
+                mAMap.setMapType(AMap.MAP_TYPE_NAVI);
+                break;
+            case MAP_TYPE_BUS:
+                mAMap.setMapType(AMap.MAP_TYPE_BUS);
+                break;
+            case MAP_TYPE_NIGHT:
+                mAMap.setMapType(AMap.MAP_TYPE_NIGHT);
+                break;
+            case MAP_TYPE_NORMAL:
+                mAMap.setMapType(AMap.MAP_TYPE_NORMAL);
+                break;
+            case MAP_TYPE_SATELLITE:
+                mAMap.setMapType(AMap.MAP_TYPE_SATELLITE);
+                break;
+        }
+
+    }
 }
