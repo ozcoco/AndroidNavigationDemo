@@ -4,7 +4,7 @@ import androidx.fragment.app.Fragment;
 
 import com.map.IMap;
 
-public abstract class BaseFragment extends Fragment {
+public class BaseFragment extends Fragment {
 
     private IMap mMap;
 

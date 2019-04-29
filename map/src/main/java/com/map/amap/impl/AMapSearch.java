@@ -17,4 +17,6 @@ public class AMapSearch implements IMapSearch {
         this.mAMap = aMap;
     }
 
+
+
 }

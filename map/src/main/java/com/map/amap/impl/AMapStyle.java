@@ -23,6 +23,8 @@ public class AMapStyle implements IMapStyle {
     @Override
     public void setMapType(MapType type) {
 
+        assert mAMap != null;
+
         switch (type) {
             case MAP_TYPE_NAVI:
                 mAMap.setMapType(AMap.MAP_TYPE_NAVI);
@@ -40,6 +42,16 @@ public class AMapStyle implements IMapStyle {
                 mAMap.setMapType(AMap.MAP_TYPE_SATELLITE);
                 break;
         }
+
+    }
+
+    @Override
+    public void setZoomControlsEnabled(boolean enabled) {
+
+        assert mAMap != null;
+
+        mAMap.getUiSettings().setZoomControlsEnabled(enabled);
+
 
     }
 }

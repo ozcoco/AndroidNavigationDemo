@@ -8,4 +8,9 @@ public class BMapStyle implements IMapStyle {
     public void setMapType(MapType type) {
 
     }
+
+    @Override
+    public void setZoomControlsEnabled(boolean enabled) {
+
+    }
 }

@@ -13,8 +13,6 @@ import com.map.R;
 import com.map.base.BaseFragment;
 import com.map.impl.AMap;
 
-import java.util.Objects;
-
 public class AMapFragment extends BaseFragment {
 
 
@@ -34,7 +32,13 @@ public class AMapFragment extends BaseFragment {
 
         mMapView = root.findViewById(R.id.map_view);
 
-        setMap(new AMap(mMapView.getContext(), mMapView.getMap()));
+        mMapView.onCreate(savedInstanceState);
+
+        com.amap.api.maps.AMap map = mMapView.getMap();
+
+        map.setMapType(com.amap.api.maps.AMap.MAP_TYPE_SATELLITE);
+
+        setMap(new AMap(getContext(), map));
 
         return root;
     }
@@ -44,15 +48,19 @@ public class AMapFragment extends BaseFragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        mMapView.onCreate(savedInstanceState);
+        initMap();
 
         initData();
 
         initView();
     }
 
-    private void initView() {
+    private void initMap() {
 
+
+    }
+
+    private void initView() {
 
 
     }
@@ -101,4 +109,5 @@ public class AMapFragment extends BaseFragment {
 
         mMapView.onDestroy();
     }
+
 }

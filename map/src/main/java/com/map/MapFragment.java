@@ -4,21 +4,22 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 
-import com.map.amap.AMapFragment;
-import com.map.base.BaseFragment;
-import com.map.bmap.BMapFragment;
+import com.map.amap.AMapView;
+import com.map.base.BaseMapView;
 
 public class MapFragment extends Fragment {
 
     private Map mMap;
 
     private Platform mPlatform;
+
+    private BaseMapView mMapView;
 
     public static MapFragment newInstance() {
         return new MapFragment();
@@ -45,73 +46,70 @@ public class MapFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-        return inflater.inflate(R.layout.fragment_map, container, false);
+        final FrameLayout root = (FrameLayout) inflater.inflate(R.layout.fragment_map, container, false);
+
+        initMapFragment(root, savedInstanceState);
+
+        return root;
+    }
+
+
+    private void initMapFragment(FrameLayout layout, Bundle savedInstanceState) {
+
+        assert layout != null;
+
+        switch (mPlatform) {
+
+            case BMAP:
+
+                mMapView = new AMapView(layout.getContext());
+
+                break;
+
+            case AMAP:
+
+                mMapView = new AMapView(layout.getContext());
+
+                break;
+        }
+
+        FrameLayout.LayoutParams layoutParams = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT);
+
+        layout.addView(mMapView, layoutParams);
+
+        mMap = new Map(mMapView.getMap());
+
+        mMapView.onCreate(savedInstanceState);
     }
 
 
     @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
 
-        initMapFragment();
+        mMapView.onSaveInstanceState(outState);
     }
-
-
-    private void initMapFragment() {
-
-        BaseFragment fragment = null;
-
-        FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
-
-        if (mPlatform == Platform.AMAP) {
-
-            fragment = AMapFragment.newInstance();
-
-            transaction.replace(R.id.container, fragment);
-
-            mMap = new Map(fragment.getMap());
-
-        } else if (mPlatform == Platform.BMAP) {
-
-            fragment = BMapFragment.newInstance();
-
-            transaction.replace(R.id.container, fragment);
-
-        }
-
-        transaction.commit();
-
-        if (fragment != null)
-            mMap = new Map(fragment.getMap());
-
-    }
-
 
     @Override
     public void onResume() {
         super.onResume();
+
+        mMapView.onResume();
     }
+
 
     @Override
-    public void onStart() {
-        super.onStart();
+    public void onPause() {
+        super.onPause();
 
+        mMapView.onPause();
     }
 
-    @Override
-    public void onStop() {
-        super.onStop();
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-    }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
 
-
+        mMapView.onDestroy();
     }
 }

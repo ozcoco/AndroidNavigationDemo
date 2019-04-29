@@ -25,23 +25,31 @@ public class AMap implements IMap {
         this.mAMap = aMap;
     }
 
+    private IMapSearch mapSearch;
+
     @Override
     public IMapSearch getMapSearch() {
-        return new AMapSearch(mContext, mAMap);
+        return mapSearch == null ? mapSearch = new AMapSearch(mContext, mAMap) : mapSearch;
     }
+
+    private IMapDraw mapDraw;
 
     @Override
     public IMapDraw getMapDraw() {
-        return new AMapDraw(mContext, mAMap);
+        return mapDraw == null ? mapDraw = new AMapDraw(mContext, mAMap) : mapDraw;
     }
+
+    private IMapStyle mapStyle;
 
     @Override
     public IMapStyle getMapStyle() {
-        return new AMapStyle(mContext, mAMap);
+        return mapStyle == null ? mapStyle = new AMapStyle(mContext, mAMap) : mapStyle;
     }
+
+    private IMapLocation mapLocation;
 
     @Override
     public IMapLocation getMapLocation() {
-        return new AMapLocation(mContext, mAMap);
+        return mapLocation == null ? mapLocation = new AMapLocation(mContext, mAMap) : mapLocation;
     }
 }
