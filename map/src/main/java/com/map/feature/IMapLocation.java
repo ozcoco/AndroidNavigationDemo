@@ -6,6 +6,6 @@ public interface IMapLocation {
 
     void setOnMyLocationChangeListener(OnLocationChangeListener listener);
 
-    void setPickCenterControlsEnabled(boolean enabled);
+    void setPinCenterControlsEnabled(boolean enabled);
 
 }

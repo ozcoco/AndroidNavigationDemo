@@ -4,7 +4,7 @@ import android.content.Context;
 
 import com.amap.api.maps.AMap;
 import com.map.feature.IMapStyle;
-import com.map.feature.MapType;
+import com.map.constant.MapType;
 
 public class AMapStyle implements IMapStyle {
 

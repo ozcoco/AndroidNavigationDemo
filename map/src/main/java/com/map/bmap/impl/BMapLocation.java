@@ -15,7 +15,7 @@ public class BMapLocation implements IMapLocation {
     }
 
     @Override
-    public void setPickCenterControlsEnabled(boolean enabled) {
+    public void setPinCenterControlsEnabled(boolean enabled) {
 
     }
 }

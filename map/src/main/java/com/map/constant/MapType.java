@@ -1,4 +1,4 @@
-package com.map.feature;
+package com.map.constant;
 
 public enum MapType {
 

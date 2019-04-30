@@ -1,7 +1,7 @@
 package com.map.bmap.impl;
 
 import com.map.feature.IMapStyle;
-import com.map.feature.MapType;
+import com.map.constant.MapType;
 
 public class BMapStyle implements IMapStyle {
     @Override

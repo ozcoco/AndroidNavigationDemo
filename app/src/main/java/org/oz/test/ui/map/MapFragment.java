@@ -12,9 +12,7 @@ import androidx.lifecycle.ViewModelProviders;
 
 import com.map.Map;
 import com.map.Platform;
-import com.map.entity.Location;
-import com.map.feature.MapType;
-import com.map.feature.OnLocationChangeListener;
+import com.map.constant.MapType;
 
 import org.oz.test.R;
 import org.oz.test.base.ControllerNavBindingFragment;
@@ -84,7 +82,7 @@ public class MapFragment extends ControllerNavBindingFragment<MapFragmentBinding
         });
 
 
-        mMap.getMapLocation().setPickCenterControlsEnabled(true);
+        mMap.getMapLocation().setPinCenterControlsEnabled(true);
 
     }
 
