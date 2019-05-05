@@ -2,7 +2,6 @@ package com.map.amap.impl;
 
 import android.content.Context;
 import android.graphics.Point;
-import android.util.Log;
 
 import com.amap.api.location.AMapLocationClient;
 import com.amap.api.location.AMapLocationClientOption;
@@ -18,9 +17,12 @@ import com.amap.api.maps.model.MarkerOptions;
 import com.amap.api.maps.model.MyLocationStyle;
 import com.amap.api.services.core.LatLonPoint;
 import com.map.R;
+import com.map.amap.utils.ToUtils;
+import com.map.constant.MapResult;
 import com.map.entity.Location;
 import com.map.feature.IMapLocation;
 import com.map.feature.OnLocationChangeListener;
+import com.map.feature.OnPinPointListener;
 import com.orhanobut.logger.Logger;
 
 public class AMapLocation implements IMapLocation, LocationSource, AMapLocationListener {
@@ -30,8 +32,12 @@ public class AMapLocation implements IMapLocation, LocationSource, AMapLocationL
     private final com.amap.api.maps.AMap mAMap;
 
     private OnLocationChangedListener mListener;
+
     private AMapLocationClient mLocationClient;
+
     private AMapLocationClientOption mLocationOption;
+
+    private OnPinPointListener mOnPinPointListener;
 
     public AMapLocation(Context context, com.amap.api.maps.AMap aMap) {
 
@@ -40,6 +46,13 @@ public class AMapLocation implements IMapLocation, LocationSource, AMapLocationL
         this.mAMap = aMap;
     }
 
+
+    @Override
+    public void setOnPinPointListener(OnPinPointListener listener) {
+
+        mOnPinPointListener = listener;
+
+    }
 
     @Override
     public void showMyLocation() {
@@ -66,37 +79,20 @@ public class AMapLocation implements IMapLocation, LocationSource, AMapLocationL
     @Override
     public void setOnMyLocationChangeListener(OnLocationChangeListener listener) {
 
-        assert mAMap != null;
+        assert mAMap != null && listener != null;
 
         mAMap.setOnMyLocationChangeListener(location -> {
 
-            final Location bean = new Location();
+            final Location bean = ToUtils.to(location);
 
-            bean.setAltitude(location.getAltitude());
-
-            bean.setBearing(location.getBearing());
-
-            bean.setElapsedRealtimeNanos(location.getElapsedRealtimeNanos());
-
-            bean.setLatitude(location.getLatitude());
-
-            bean.setLongitude(location.getLongitude());
-
-            bean.setSpeed(location.getSpeed());
-
-            bean.setTime(location.getTime());
-
-            if (listener != null)
-                listener.onLocationChange(bean);
-
-            Logger.i("%s", bean.toString());
+            listener.onLocationChange(bean);
 
         });
 
     }
 
 
-    private LatLonPoint searchLatlonPoint;
+    private LatLonPoint pinPoint;
 
     @Override
     public void setPinCenterControlsEnabled(boolean enabled) {
@@ -114,9 +110,10 @@ public class AMapLocation implements IMapLocation, LocationSource, AMapLocationL
             @Override
             public void onCameraChangeFinish(CameraPosition cameraPosition) {
 
-                searchLatlonPoint = new LatLonPoint(cameraPosition.target.latitude, cameraPosition.target.longitude);
+                pinPoint = new LatLonPoint(cameraPosition.target.latitude, cameraPosition.target.longitude);
 
-                Log.i("--->searchLatlonPoint:", searchLatlonPoint.toString());
+                if (mOnPinPointListener != null)
+                    mOnPinPointListener.onPinPoint(ToUtils.to(pinPoint), MapResult.Success);
 
             }
         });
@@ -195,7 +192,7 @@ public class AMapLocation implements IMapLocation, LocationSource, AMapLocationL
 
                 LatLng curLatlng = new LatLng(location.getLatitude(), location.getLongitude());
 
-//                searchLatlonPoint = new LatLonPoint(curLatlng.latitude, curLatlng.longitude);
+                pinPoint = new LatLonPoint(curLatlng.latitude, curLatlng.longitude);
 
                 mAMap.moveCamera(CameraUpdateFactory.newLatLngZoom(curLatlng, 16f));
 

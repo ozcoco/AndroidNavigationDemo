@@ -4,7 +4,6 @@ import android.content.Context;
 
 import com.amap.api.services.core.AMapException;
 import com.amap.api.services.core.LatLonPoint;
-import com.amap.api.services.core.PoiItem;
 import com.amap.api.services.geocoder.GeocodeResult;
 import com.amap.api.services.geocoder.GeocodeSearch;
 import com.amap.api.services.geocoder.RegeocodeQuery;
@@ -15,16 +14,16 @@ import com.amap.api.services.poisearch.PoiResult;
 import com.amap.api.services.poisearch.PoiSearch;
 import com.map.amap.utils.ToUtils;
 import com.map.constant.MapResult;
+import com.map.constant.PoiSearchType;
 import com.map.entity.Address;
 import com.map.entity.LatLngPoint;
+import com.map.entity.PoiItem;
 import com.map.entity.Tip;
 import com.map.feature.IMapSearch;
 import com.map.feature.OnKeyTipsListener;
-import com.map.constant.PoiSearchType;
 import com.map.feature.OnPoiSearchListener;
 import com.map.feature.OnRegeocodeSearchListener;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class AMapSearch implements IMapSearch, GeocodeSearch.OnGeocodeSearchListener, PoiSearch.OnPoiSearchListener {
@@ -153,16 +152,10 @@ public class AMapSearch implements IMapSearch, GeocodeSearch.OnGeocodeSearchList
 
             if (rCode == AMapException.CODE_AMAP_SUCCESS) {// 正确返回
 
-                final List<Tip> list = new ArrayList<>();
-
-                int len = data.size();
-
-                for (int i = 0; i < len; i++) {
-
-                    list.add(ToUtils.toMy(data.get(i)));
-                }
+                final List<Tip> list = ToUtils.to(data);
 
                 listener.onKeyTips(list, MapResult.Success);
+
             } else {
 
                 listener.onKeyTips(null, MapResult.Fail);
@@ -179,6 +172,8 @@ public class AMapSearch implements IMapSearch, GeocodeSearch.OnGeocodeSearchList
     @Override
     public void onRegeocodeSearched(RegeocodeResult result, int rCode) {
 
+        assert mOnRegeocodeSearchListener != null;
+
         if (rCode == AMapException.CODE_AMAP_SUCCESS) {
 
             if (result != null && result.getRegeocodeAddress() != null
@@ -188,7 +183,11 @@ public class AMapSearch implements IMapSearch, GeocodeSearch.OnGeocodeSearchList
 
                 address.setPoint(ToUtils.to(result.getRegeocodeQuery().getPoint()));
 
+                mOnRegeocodeSearchListener.onRegeocodeSearch(address, MapResult.Success);
+
             }
+        } else {
+            mOnRegeocodeSearchListener.onRegeocodeSearch(null, MapResult.Success);
         }
 
 
@@ -205,15 +204,24 @@ public class AMapSearch implements IMapSearch, GeocodeSearch.OnGeocodeSearchList
     @Override
     public void onPoiSearched(PoiResult result, int rCode) {
 
+        assert mOnPoiSearchListener != null;
+
         if (rCode == AMapException.CODE_AMAP_SUCCESS) {
 
-            ArrayList<PoiItem> pois = result.getPois();
+            final List<PoiItem> items = ToUtils.to(result.getPois());
 
+            mOnPoiSearchListener.onPoiItems(items, MapResult.Success);
+
+        } else {
+
+            mOnPoiSearchListener.onPoiItems(null, MapResult.Fail);
         }
+
+
     }
 
     @Override
-    public void onPoiItemSearched(PoiItem item, int rCode) {
+    public void onPoiItemSearched(com.amap.api.services.core.PoiItem item, int rCode) {
 
 
     }

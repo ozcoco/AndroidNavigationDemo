@@ -4,6 +4,7 @@ import com.amap.api.services.geocoder.RegeocodeAddress;
 import com.map.entity.Address;
 import com.map.entity.IndoorData;
 import com.map.entity.LatLngPoint;
+import com.map.entity.Location;
 import com.map.entity.Photo;
 import com.map.entity.PoiItem;
 import com.map.entity.PoiItemExtension;
@@ -67,11 +68,37 @@ public class ToUtils {
             } else if (src.get(i) instanceof RegeocodeAddress) {
 
                 list.add(to((RegeocodeAddress) src.get(i)));
+            } else if (src.get(i) instanceof android.location.Location) {
+
+                list.add(to((android.location.Location) src.get(i)));
             }
 
         }
 
         return list;
+    }
+
+    public static Location to(android.location.Location src) {
+
+        assert src != null;
+
+        final Location bean = new Location();
+
+        bean.setAltitude(src.getAltitude());
+
+        bean.setBearing(src.getBearing());
+
+        bean.setElapsedRealtimeNanos(src.getElapsedRealtimeNanos());
+
+        bean.setLatitude(src.getLatitude());
+
+        bean.setLongitude(src.getLongitude());
+
+        bean.setSpeed(src.getSpeed());
+
+        bean.setTime(src.getTime());
+
+        return bean;
     }
 
 
