@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
@@ -19,10 +20,47 @@
         android:layout_height="match_parent"
         tools:context=".ui.av.AVFragment">
 
-        <TextView
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="AV" />
+            android:layout_height="match_parent">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tx_first"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="first"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <org.oz.test.widgets.view.ChoiceChips
+                android:id="@+id/cc_ships"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:chipSpacingHorizontal="4dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tx_first"
+                app:onChipCheckedChangeListener="@{handle}"
+                app:singleSelection="true" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tx_second"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="second"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/cc_ships" />
+
+            <org.oz.test.widgets.view.ChoiceChips
+                android:id="@+id/cc_ships_second"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:chipSpacingHorizontal="4dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tx_second"
+                app:onChipCheckedChangeListener="@{handle}"
+                app:singleSelection="true" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
     </FrameLayout>
 </layout>
