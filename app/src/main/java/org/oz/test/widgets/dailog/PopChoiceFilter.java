@@ -3,52 +3,166 @@ package org.oz.test.widgets.dailog;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.drawable.ColorDrawable;
-import android.util.ArrayMap;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.PopupWindow;
 
-import com.blankj.utilcode.util.ToastUtils;
+import androidx.appcompat.widget.LinearLayoutCompat;
+
 import com.google.android.material.chip.Chip;
 
 import org.oz.test.R;
 import org.oz.test.widgets.view.ChoiceChipGroup;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
-import java.util.Locale;
 
 import static android.content.Context.LAYOUT_INFLATER_SERVICE;
 
 public class PopChoiceFilter extends PopupWindow implements ChoiceChipGroup.OnChipCheckedChangeListener {
 
-    private ArrayMap<String, List<String>> map;
+    public interface OnChoiceFilterFinishListener {
 
-    private final ChoiceChipGroup cc_first;
+        void onChoiceFilterFinished(int[] choicesId, int[] positions);
 
-    private final ChoiceChipGroup cc_second;
+    }
 
-    private final ChoiceChipGroup cc_third;
+    public interface OnChoicesChangeListener {
 
-    ChoiceChipGroup.ChipAdapter<String> secondAdapter;
+        void onChoicesChanged(int choiceId, int position);
+
+    }
+
+    public static abstract class ChoiceViewHolder {
+
+        private final View mRoot;
+
+        protected ChoiceChipGroup mChoiceChipGroup;
+
+        public ChoiceViewHolder(View root) {
+            mRoot = root;
+        }
+
+        public View getRoot() {
+            return mRoot;
+        }
+
+        public ChoiceChipGroup getChoiceChipGroup() {
+            return mChoiceChipGroup;
+        }
+
+        public void setAdapter(ChoiceChipGroup.ChipAdapter adapter) {
+
+            assert mChoiceChipGroup != null;
+
+            mChoiceChipGroup.setAdapter(adapter);
+
+        }
+
+    }
+
+    public static abstract class Choice<H extends ChoiceViewHolder, C, I> {
+
+        private final int choiceId;
+
+        private final List<I> items;
+
+        private final C data;
+
+        private final ChoiceChipGroup.ChipAdapter<I> adapter;
+
+        private final H viewHolder;
+
+        public Choice(Context context, int choiceId, List<I> items, C data) {
+            this.choiceId = choiceId;
+            this.items = items;
+            this.data = data;
+
+            LayoutInflater inflater = (LayoutInflater) context.getSystemService(LAYOUT_INFLATER_SERVICE);
+
+            viewHolder = createChoiceView(context, inflater, data);
+
+            adapter = new ChoiceChipGroup.ChipAdapter<I>(context) {
+                @Override
+                public Chip createView(Context context, LayoutInflater inflater, ViewGroup parent, I data, int position) {
+
+                    return createChoiceItem(context, inflater, parent, data, position);
+                }
+            };
+
+            viewHolder.setAdapter(adapter);
+
+            adapter.setData(items);
+
+        }
+
+        public int getChoiceId() {
+            return choiceId;
+        }
+
+        public List<I> getItems() {
+            return items;
+        }
+
+        public C getData() {
+            return data;
+        }
+
+        public ChoiceChipGroup.ChipAdapter<I> getAdapter() {
+            return adapter;
+        }
+
+        public H getViewHolder() {
+            return viewHolder;
+        }
+
+        public abstract Chip createChoiceItem(Context context, LayoutInflater inflater, ViewGroup parent, I data, int position);
+
+        public abstract H createChoiceView(Context context, LayoutInflater inflater, C data);
+
+    }
 
 
-    public PopChoiceFilter(Context context) {
+    private List<Choice> choices;
+
+    private OnChoicesChangeListener onChoicesChangeListener;
+
+    private OnChoiceFilterFinishListener onChoiceFilterFinishListener;
+
+    private int[] changeChoiceIds;
+
+    private int[] checkedChoiceItemPostions;
+
+    public OnChoiceFilterFinishListener getOnChoiceFilterFinishListener() {
+        return onChoiceFilterFinishListener;
+    }
+
+    public void setOnChoiceFilterFinishListener(OnChoiceFilterFinishListener onChoiceFilterFinishListener) {
+        this.onChoiceFilterFinishListener = onChoiceFilterFinishListener;
+    }
+
+    public OnChoicesChangeListener getOnChoicesChangeListener() {
+        return onChoicesChangeListener;
+    }
+
+    public void setOnChoicesChangeListener(OnChoicesChangeListener onChoicesChangeListener) {
+        this.onChoicesChangeListener = onChoicesChangeListener;
+    }
+
+    public PopChoiceFilter(Context context, Choice... choices) {
 
         super(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
 
-        LayoutInflater inflater = (LayoutInflater) context.getSystemService(LAYOUT_INFLATER_SERVICE);
+        assert choices != null;
 
-        @SuppressLint("InflateParams") View root = inflater.inflate(R.layout.pop_choice_filter, null);
+        LayoutInflater
+                inflater = (LayoutInflater) context.getSystemService(LAYOUT_INFLATER_SERVICE);
+
+        @SuppressLint("InflateParams") View root = inflater.inflate(R.layout.pop_choice_filter2, null);
 
         setContentView(root);
-
-        cc_first = root.findViewById(R.id.cc_first);
-
-        cc_second = root.findViewById(R.id.cc_second);
-
-        cc_third = root.findViewById(R.id.cc_third);
 
         setElevation(5.0f);
 
@@ -58,120 +172,91 @@ public class PopChoiceFilter extends PopupWindow implements ChoiceChipGroup.OnCh
 
         setBackgroundDrawable(new ColorDrawable(0x55555555));
 
+        int len = choices.length;
+
+        this.choices = new ArrayList<>(len);
+
+        this.choices.addAll(Arrays.asList(choices).subList(0, len));
+
         init();
 
     }
+
 
     private void init() {
 
         getContentView().setOnClickListener(v -> dismiss());
 
-        map = new ArrayMap<>();
+        getContentView().findViewById(R.id.btn_reset).setOnClickListener(v -> {
 
-        for (int i = 0; i < 5; i++) {
+            for (int i = 0; i < choices.size(); i++) {
 
-            List<String> list = new ArrayList<>();
+                choices.get(i).getViewHolder().getChoiceChipGroup().check(choices.get(i).getViewHolder().getChoiceChipGroup().getChildAt(0).getId());
 
-            for (int j = 0; j < 5 + i; j++) {
-
-                list.add("SubChip" + i + j);
-
+                checkedChoiceItemPostions[i] = 0;
             }
 
-            map.put("Chip" + i, list);
+        });
 
+
+        getContentView().findViewById(R.id.btn_ok).setOnClickListener(v -> {
+
+            if (onChoiceFilterFinishListener != null) {
+                onChoiceFilterFinishListener.onChoiceFilterFinished(changeChoiceIds, checkedChoiceItemPostions);
+            }
+
+
+        });
+
+        LinearLayoutCompat container = getContentView().findViewById(R.id.container);
+
+        int len = choices.size();
+
+        changeChoiceIds = new int[len];
+
+        checkedChoiceItemPostions = new int[len];
+
+        for (int i = 0; i < len; i++) {
+
+            changeChoiceIds[i] = choices.get(i).getChoiceId();
+
+            checkedChoiceItemPostions[i] = 0;
+
+            ChoiceViewHolder holder = choices.get(i).getViewHolder();
+
+            if (null != holder) {
+
+                container.addView(holder.getRoot());
+
+                if (null != holder.getChoiceChipGroup())
+                    holder.getChoiceChipGroup().setOnChipCheckedChangeListener(this);
+
+            }
         }
 
-        ChoiceChipGroup.ChipAdapter<String> firstAdapter = new ChoiceChipGroup.ChipAdapter<String>(getContentView().getContext()) {
-
-            @Override
-            public Chip createView(Context context, LayoutInflater inflater, ViewGroup parent, String data, int position) {
-
-                final Chip v = (Chip) inflater.inflate(R.layout.item_choice_chip, parent, false);
-
-                v.setChecked(position == 0);
-
-                v.setText(data);
-
-                return v;
-            }
-        };
-
-        List<String> firstData = new ArrayList<>(map.keySet());
-
-        firstAdapter.setData(firstData);
-
-        cc_first.setAdapter(firstAdapter);
-
-        cc_first.setOnChipCheckedChangeListener(this);
-
-        secondAdapter = new ChoiceChipGroup.ChipAdapter<String>(getContentView().getContext()) {
-
-            @Override
-            public Chip createView(Context context, LayoutInflater inflater, ViewGroup parent, String data, int position) {
-
-                final Chip v = (Chip) inflater.inflate(R.layout.item_choice_chip, parent, false);
-
-                v.setChecked(position == 0);
-
-                v.setText(data);
-
-                return v;
-            }
-        };
-
-        secondAdapter.setData(map.valueAt(0));
-
-        cc_second.setAdapter(secondAdapter);
-
-        cc_second.setOnChipCheckedChangeListener(this);
-
-
-        ChoiceChipGroup.ChipAdapter<String> thirdAdapter = new ChoiceChipGroup.ChipAdapter<String>(getContentView().getContext()) {
-
-            @Override
-            public Chip createView(Context context, LayoutInflater inflater, ViewGroup parent, String data, int position) {
-
-                final Chip v = (Chip) inflater.inflate(R.layout.item_choice_chip, parent, false);
-
-                v.setChecked(position == 0);
-
-                v.setText(data);
-
-                return v;
-            }
-        };
-
-        cc_third.setAdapter(thirdAdapter);
-
-        cc_third.setOnChipCheckedChangeListener(this);
-
-        List<String> thirdData = new ArrayList<>();
-
-        for (int i = 0; i < 7; i++) {
-
-            thirdData.add("日期" + i);
-        }
-
-        thirdAdapter.addData(thirdData);
     }
+
 
     @Override
     public void OnCheckedChange(ChoiceChipGroup group, int id, int position) {
 
-        if (group.getId() == R.id.cc_first) {
+        int len = choices.size();
 
-            secondAdapter.setData(map.valueAt(position));
+        for (int i = 0; i < len; i++) {
 
-            ToastUtils.showShort(String.format(Locale.CHINA, "Checked first chip Id:%d", id));
+            final Choice choice = choices.get(i);
 
-        } else if (group.getId() == R.id.cc_second) {
+            if (onChoicesChangeListener != null && group == choice.getViewHolder().getChoiceChipGroup()) {
 
-            ToastUtils.showShort(String.format(Locale.CHINA, "Checked second chip Id:%d", id));
+                onChoicesChangeListener.onChoicesChanged(choice.choiceId, position);
 
-        } else if (group.getId() == R.id.cc_third) {
+                if (choice.getChoiceId() == changeChoiceIds[i]) {
 
-            ToastUtils.showShort(String.format(Locale.CHINA, "Checked third chip Id:%d", id));
+                    checkedChoiceItemPostions[i] = position;
+
+                }
+
+            }
 
         }
 

@@ -16,55 +16,11 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:padding="@dimen/dp_16">
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/tx_first"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/dp_8"
-                android:text="农事筛选" />
-
-            <org.oz.test.widgets.view.ChoiceChipGroup
-                android:id="@+id/cc_first"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/dp_8"
-                app:singleSelection="true" />
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/tx_second"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/dp_8"
-                android:text="农事类型" />
-
-            <org.oz.test.widgets.view.ChoiceChipGroup
-                android:id="@+id/cc_second"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/dp_8"
-                app:chipSpacingHorizontal="@dimen/dp_4"
-                app:singleSelection="true" />
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/tx_third"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/dp_8"
-                android:text="时间" />
-
-            <org.oz.test.widgets.view.ChoiceChipGroup
-                android:id="@+id/cc_third"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/dp_8"
-                app:chipSpacingHorizontal="@dimen/dp_4"
-                app:singleSelection="true" />
-
 
         </androidx.appcompat.widget.LinearLayoutCompat>
     </androidx.core.widget.NestedScrollView>

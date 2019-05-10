@@ -9,7 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.Nullable;
-import androidx.core.widget.PopupWindowCompat;
+import androidx.appcompat.widget.AppCompatTextView;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.blankj.utilcode.util.ToastUtils;
@@ -35,6 +35,134 @@ public class AVFragment extends ControllerNavBindingFragment<AvFragmentBinding, 
     private PopChoiceFilter popChoiceFilter;
 
 
+    class CommonChoiceViewHolder extends PopChoiceFilter.ChoiceViewHolder {
+
+        AppCompatTextView title;
+
+        public CommonChoiceViewHolder(View root) {
+            super(root);
+            title = root.findViewById(R.id.title);
+            mChoiceChipGroup = root.findViewById(R.id.chips);
+        }
+
+    }
+
+    private void initPopChoiceFilter() {
+
+
+        PopChoiceFilter.Choice<CommonChoiceViewHolder, String, String> first =
+                new PopChoiceFilter.Choice<CommonChoiceViewHolder, String, String>(getContext(), 1, map.valueAt(0), "农事筛选") {
+
+
+                    @Override
+                    public Chip createChoiceItem(Context context, LayoutInflater inflater, ViewGroup parent, String data, int position) {
+
+                        Chip v = (Chip) inflater.inflate(R.layout.item_choice_chip, parent, false);
+
+                        v.setChecked(position == 0);
+
+                        v.setText(data);
+
+                        return v;
+                    }
+
+                    @Override
+                    public CommonChoiceViewHolder createChoiceView(Context context, LayoutInflater inflater, String data) {
+
+                        CommonChoiceViewHolder holder = new CommonChoiceViewHolder(inflater.inflate(R.layout.item_choice, null));
+
+                        holder.title.setText(data);
+
+                        return holder;
+                    }
+                };
+
+
+        PopChoiceFilter.Choice<CommonChoiceViewHolder, String, String> second =
+                new PopChoiceFilter.Choice<CommonChoiceViewHolder, String, String>(getContext(), 2, map.valueAt(1), "农事类型") {
+
+
+                    @Override
+                    public Chip createChoiceItem(Context context, LayoutInflater inflater, ViewGroup parent, String data, int position) {
+                        Chip v = (Chip) inflater.inflate(R.layout.item_choice_chip, parent, false);
+
+                        v.setChecked(position == 0);
+
+                        v.setText(data);
+
+                        return v;
+                    }
+
+                    @Override
+                    public CommonChoiceViewHolder createChoiceView(Context context, LayoutInflater inflater, String data) {
+                        CommonChoiceViewHolder holder = new CommonChoiceViewHolder(inflater.inflate(R.layout.item_choice, null));
+
+                        holder.title.setText(data);
+
+                        return holder;
+                    }
+                };
+
+        List<String> thirdData = new ArrayList<>();
+
+        for (int i = 0; i < 7; i++) {
+
+            thirdData.add("日期" + i);
+        }
+
+        PopChoiceFilter.Choice<CommonChoiceViewHolder, String, String> third = new
+                PopChoiceFilter.Choice<CommonChoiceViewHolder, String, String>(getContext(), 3, thirdData, "时间") {
+
+
+                    @Override
+                    public Chip createChoiceItem(Context context, LayoutInflater inflater, ViewGroup parent, String data, int position) {
+                        Chip v = (Chip) inflater.inflate(R.layout.item_choice_chip, parent, false);
+
+                        v.setChecked(position == 0);
+
+                        v.setText(data);
+
+                        return v;
+                    }
+
+                    @Override
+                    public CommonChoiceViewHolder createChoiceView(Context context, LayoutInflater inflater, String data) {
+                        CommonChoiceViewHolder holder = new CommonChoiceViewHolder(inflater.inflate(R.layout.item_choice, null));
+
+                        holder.title.setText(data);
+
+                        return holder;
+                    }
+                };
+
+
+        popChoiceFilter = new PopChoiceFilter(getContext(), first, second, third);
+
+        popChoiceFilter.setOnChoicesChangeListener((choiceId, position) -> {
+
+            if (choiceId == first.getChoiceId()) {
+
+                second.getAdapter().setData(map.valueAt(position));
+
+            }
+
+            ToastUtils.showShort(String.format(Locale.CHINA, "choice id: %d Chip position:%d", choiceId, position));
+
+        });
+
+        popChoiceFilter.setOnChoiceFilterFinishListener((choicesId, positions) -> {
+
+            StringBuffer buffer = new StringBuffer("Chip positions:");
+
+            for (int position : positions)
+                buffer.append("--->").append(position);
+
+            ToastUtils.showShort(buffer.toString());
+        });
+
+    }
+
+
     public class Handle implements ChoiceChipGroup.OnChipCheckedChangeListener {
 
 
@@ -42,15 +170,12 @@ public class AVFragment extends ControllerNavBindingFragment<AvFragmentBinding, 
 
             if (popChoiceFilter == null) {
 
-                popChoiceFilter = new PopChoiceFilter(getContext());
+                initPopChoiceFilter();
 
                 popChoiceFilter.showAtLocation(getView(), Gravity.START | Gravity.TOP, 0, 0);
-
-//                PopupWindowCompat.showAsDropDown(popChoiceFilter, getBinding().ccShips, 0, 0, Gravity.START | Gravity.TOP);
 
             } else {
                 popChoiceFilter.showAtLocation(getView(), Gravity.START | Gravity.TOP, 0, 0);
-//                PopupWindowCompat.showAsDropDown(popChoiceFilter, getBinding().ccShips, 0, 0, Gravity.START | Gravity.TOP);
             }
 
         }
