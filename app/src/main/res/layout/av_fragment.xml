@@ -32,7 +32,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <org.oz.test.widgets.view.ChoiceChips
+            <org.oz.test.widgets.view.ChoiceChipGroup
                 android:id="@+id/cc_ships"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -50,7 +50,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/cc_ships" />
 
-            <org.oz.test.widgets.view.ChoiceChips
+            <org.oz.test.widgets.view.ChoiceChipGroup
                 android:id="@+id/cc_ships_second"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -59,6 +59,18 @@
                 app:layout_constraintTop_toBottomOf="@id/tx_second"
                 app:onChipCheckedChangeListener="@{handle}"
                 app:singleSelection="true" />
+
+            <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/dp_16"
+                android:onClick="@{handle::onPop}"
+                android:text="Pop"
+                android:textColor="@android:color/white"
+                app:icon="@drawable/ic_polymer_black_24dp"
+                app:iconTint="#FFFFFF"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

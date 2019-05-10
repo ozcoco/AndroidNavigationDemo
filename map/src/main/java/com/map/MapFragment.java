@@ -105,11 +105,18 @@ public class MapFragment extends Fragment {
         mMapView.onPause();
     }
 
+    @Override
+    public void onStop() {
+        super.onStop();
+
+    }
 
     @Override
-    public void onDestroy() {
-        super.onDestroy();
+    public void onDestroyView() {
+        super.onDestroyView();
 
         mMapView.onDestroy();
+
     }
+
 }

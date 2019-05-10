@@ -3,10 +3,13 @@ package org.oz.test.ui.av;
 import android.content.Context;
 import android.os.Bundle;
 import android.util.ArrayMap;
+import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.Nullable;
+import androidx.core.widget.PopupWindowCompat;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.blankj.utilcode.util.ToastUtils;
@@ -15,7 +18,8 @@ import com.google.android.material.chip.Chip;
 import org.oz.test.R;
 import org.oz.test.base.ControllerNavBindingFragment;
 import org.oz.test.databinding.AvFragmentBinding;
-import org.oz.test.widgets.view.ChoiceChips;
+import org.oz.test.widgets.dailog.PopChoiceFilter;
+import org.oz.test.widgets.view.ChoiceChipGroup;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,12 +30,33 @@ public class AVFragment extends ControllerNavBindingFragment<AvFragmentBinding, 
 
     private ArrayMap<String, List<String>> map;
 
-    ChoiceChips.ChipAdapter<String> subAdapter;
+    ChoiceChipGroup.ChipAdapter<String> subAdapter;
 
-    public class Handle implements ChoiceChips.OnChipCheckedChangeListener {
+    private PopChoiceFilter popChoiceFilter;
+
+
+    public class Handle implements ChoiceChipGroup.OnChipCheckedChangeListener {
+
+
+        public void onPop(View v) {
+
+            if (popChoiceFilter == null) {
+
+                popChoiceFilter = new PopChoiceFilter(getContext());
+
+                popChoiceFilter.showAtLocation(getView(), Gravity.START | Gravity.TOP, 0, 0);
+
+//                PopupWindowCompat.showAsDropDown(popChoiceFilter, getBinding().ccShips, 0, 0, Gravity.START | Gravity.TOP);
+
+            } else {
+                popChoiceFilter.showAtLocation(getView(), Gravity.START | Gravity.TOP, 0, 0);
+//                PopupWindowCompat.showAsDropDown(popChoiceFilter, getBinding().ccShips, 0, 0, Gravity.START | Gravity.TOP);
+            }
+
+        }
 
         @Override
-        public void OnCheckedChange(ChoiceChips group, int id, int position) {
+        public void OnCheckedChange(ChoiceChipGroup group, int id, int position) {
 
             if (group.getId() == R.id.cc_ships) {
 
@@ -63,7 +88,7 @@ public class AVFragment extends ControllerNavBindingFragment<AvFragmentBinding, 
     public void onStart() {
         super.onStart();
 
-        ChoiceChips.ChipAdapter<String> adapter = new ChoiceChips.ChipAdapter<String>(getContext()) {
+        ChoiceChipGroup.ChipAdapter<String> adapter = new ChoiceChipGroup.ChipAdapter<String>(getContext()) {
 
             @Override
             public Chip createView(Context context, LayoutInflater inflater, ViewGroup parent, String data, int position) {
@@ -101,7 +126,7 @@ public class AVFragment extends ControllerNavBindingFragment<AvFragmentBinding, 
 
         getBinding().ccShips.setAdapter(adapter);
 
-        subAdapter = new ChoiceChips.ChipAdapter<String>(getContext()) {
+        subAdapter = new ChoiceChipGroup.ChipAdapter<String>(getContext()) {
 
             @Override
             public Chip createView(Context context, LayoutInflater inflater, ViewGroup parent, String data, int position) {

@@ -29,7 +29,7 @@ interface Callback {
 
 }
 
-public class ChoiceChips extends ChipGroup implements Callback {
+public class ChoiceChipGroup extends ChipGroup implements Callback {
 
 
     enum OP {
@@ -41,7 +41,7 @@ public class ChoiceChips extends ChipGroup implements Callback {
 
     public interface OnChipCheckedChangeListener {
 
-        void OnCheckedChange(ChoiceChips group, int id, int position);
+        void OnCheckedChange(ChoiceChipGroup group, int id, int position);
 
     }
 
@@ -189,15 +189,15 @@ public class ChoiceChips extends ChipGroup implements Callback {
 
     private ChipAdapter mAdapter;
 
-    public ChoiceChips(Context context) {
+    public ChoiceChipGroup(Context context) {
         super(context);
     }
 
-    public ChoiceChips(Context context, AttributeSet attrs) {
+    public ChoiceChipGroup(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
 
-    public ChoiceChips(Context context, AttributeSet attrs, int defStyleAttr) {
+    public ChoiceChipGroup(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
     }
 
@@ -224,7 +224,7 @@ public class ChoiceChips extends ChipGroup implements Callback {
                 if (group.getChildAt(i).getId() == checkedId) {
 
                     if (mOnCheckedChangeListener != null)
-                        mOnCheckedChangeListener.OnCheckedChange(ChoiceChips.this, checkedId, i);
+                        mOnCheckedChangeListener.OnCheckedChange(ChoiceChipGroup.this, checkedId, i);
                     return;
                 } else {
 

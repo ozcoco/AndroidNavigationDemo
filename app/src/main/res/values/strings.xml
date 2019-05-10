@@ -6,6 +6,8 @@
     <string name="title_av">AV</string>
     <string name="scan">scan</string>
     <string name="title_map">map</string>
+    <string name="action_reset">重置</string>
+    <string name="action_ok">确定</string>
 
     <!-- TODO: Remove or change this placeholder text -->
 </resources>
